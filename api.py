@@ -6,10 +6,7 @@ from tasks import process_folder_task
 app = FastAPI(title="HTML to Excel Processor")
 
 class FolderRequest(BaseModel):
-    folder_name: str  # folder relative to input folder
-
-# INPUT_FOLDER = "/mnt/c/Users/user/Documents/mcm_github/ndf-data-scrapper/Misumi_Scraper/Parsing with redis/Input Files"
-# OUTPUT_FOLDER = "/mnt/c/Users/user/Documents/mcm_github/ndf-data-scrapper/Misumi_Scraper/Parsing with redis/Output Files"
+    folder_name: str 
 
 INPUT_FOLDER = os.getenv("INPUT_FOLDER", "./data/Input Files")
 OUTPUT_FOLDER = os.getenv("OUTPUT_FOLDER", "./data/Output Files")
@@ -36,7 +33,6 @@ def process_selected_folders(data: FolderList):
     }
     return response
 
-    # return {"dispatched_tasks": tasks, "total_folders": len(tasks)}
 
 @app.post("/process_all_folders/")
 def process_all_folders():
@@ -59,7 +55,6 @@ def process_all_folders():
         "message": f"{len(tasks)} folders dispatched successfully."
     }
     return response
-    # return {"dispatched_tasks": tasks, "total_folders": len(html_folders)}
 
 @app.get("/task-status/{task_id}")
 async def task_status(task_id: str):
