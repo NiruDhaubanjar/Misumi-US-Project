@@ -1,0 +1,35 @@
+services:
+  redis:
+    image: redis:7
+    container_name: redis_broker
+    ports:
+      - "6379:6379"
+
+  api:
+    build: .
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      INPUT_FOLDER: /app/data/Input Files
+      OUTPUT_FOLDER: /app/data/Output Files
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    depends_on:
+      - redis
+
+  worker:
+    build: .
+    container_name: celery_worker
+    command: celery -A tasks.celery_app worker --loglevel=info
+    volumes:
+      - ./data:/app/data
+    environment:
+      INPUT_FOLDER: /app/data/Input Files
+      OUTPUT_FOLDER: /app/data/Output Files
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    depends_on:
+      - redis
