@@ -17,17 +17,9 @@ backend_url = os.getenv("CELERY_RESULT_BACKEND", "redis://localhost:6379/0")
 celery_app = Celery("parser", broker=broker_url, backend=backend_url)
 celery_app.conf.broker_connection_retry_on_startup = True
 
-# celery_app = Celery(
-#     "parser",
-#     broker="redis://localhost:6379/0",
-#     backend="redis://localhost:6379/0"
-# )
-
 celery_app.conf.broker_connection_retry_on_startup = True
 
-# -----------------------
 # Parser logic merged here
-# -----------------------
 def process_multiple_html_files(html_files):
     all_data = []
 
@@ -77,9 +69,7 @@ def process_multiple_html_files(html_files):
 
     return pd.DataFrame(all_data)
 
-# -----------------------
 # Celery task
-# -----------------------
 @celery_app.task
 def process_folder_task(root, input_folder, output_folder):
     """Process all HTMLs in one folder -> save Excel file"""
