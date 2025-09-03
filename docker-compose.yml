@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   redis:
     image: redis:7
@@ -13,10 +15,10 @@ services:
     volumes:
       - ./data:/app/data
     environment:
-      INPUT_FOLDER: /app/data/Input Files
-      OUTPUT_FOLDER: /app/data/Output Files
-      CELERY_BROKER_URL: redis://redis:6379/0
-      CELERY_RESULT_BACKEND: redis://redis:6379/0
+      INPUT_FOLDER: ${INPUT_FOLDER}
+      OUTPUT_FOLDER: ${OUTPUT_FOLDER}
+      CELERY_BROKER_URL: ${CELERY_BROKER_URL}
+      CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND}
     depends_on:
       - redis
 
@@ -27,9 +29,9 @@ services:
     volumes:
       - ./data:/app/data
     environment:
-      INPUT_FOLDER: /app/data/Input Files
-      OUTPUT_FOLDER: /app/data/Output Files
-      CELERY_BROKER_URL: redis://redis:6379/0
-      CELERY_RESULT_BACKEND: redis://redis:6379/0
+      INPUT_FOLDER: ${INPUT_FOLDER}
+      OUTPUT_FOLDER: ${OUTPUT_FOLDER}
+      CELERY_BROKER_URL: ${CELERY_BROKER_URL}
+      CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND}
     depends_on:
       - redis
