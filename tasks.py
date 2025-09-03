@@ -11,8 +11,8 @@ import pandas as pd
 from basic_information import extract_title, extract_subtitle, extract_part_number, extract_description, extract_volume_discount_table
 from specification_alterations import extract_spec_table_from_html, extract_alteration_specs
 
-broker_url = os.getenv("CELERY_BROKER_URL", "redis://localhost:6379/0")
-backend_url = os.getenv("CELERY_RESULT_BACKEND", "redis://localhost:6379/0")
+broker_url = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/0")
+backend_url = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/0")
 
 celery_app = Celery("parser", broker=broker_url, backend=backend_url)
 celery_app.conf.broker_connection_retry_on_startup = True
